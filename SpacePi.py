@@ -1,5 +1,6 @@
 from cscore import CameraServer
 import cv2
+import numpy as np
 import threading
 from networktables import NetworkTables
 

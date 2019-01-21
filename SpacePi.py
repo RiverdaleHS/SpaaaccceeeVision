@@ -43,14 +43,16 @@ subprocess.call(["./setup_camera.sh"])
 cvSink = cs.getVideo()
 
 # (optional) Setup a CvSource. This will send images back to the Dashboard
-outputStream = cs.putVideo("Name", 320, 240)
+binaryStream = cs.putVideo("Binary Stream", 320, 240)
+contourStream = cs.putVideo("Contour Stream", 320, 240)
 
 img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 
 while True:
 	time, img = cvSink.grabFrame(img)
 	if time == 0:
-		outputStream.notifyError(cvSink.getError());
+		binaryStream.notifyError(cvSink.getError());
+		contourStream.notifyError(cvSink.getError());
 		continue
 
 	hue_min = table.getNumber("hue_min", 0)
@@ -96,14 +98,13 @@ while True:
 				negative_targets.append(contour)
 		except:
 			pass
-	#if table.getNumber("Draw Contours", 0) == 1:
-	cv2.drawContours(img, contours, -1, (255, 0, 0), 1)
-	cv2.drawContours(img, positive_targets, -1, (0, 255, 0), 5)
-	cv2.drawContours(img, negative_targets, -1, (0, 0, 255), 5)
-
-
-	outputStream.putFrame(img)
-
+	frame_contour = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
+	cv2.drawContours(frame_contour, contours, -1, (255, 0, 0), 1)
+	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 5)
+	cv2.drawContours(frame_contour, negative_targets, -1, (0, 0, 255), 5)
+	
+	binaryStream.putFrame(frame_binary)
+	contourStream.putFrame(frame_contour)
 
 
 

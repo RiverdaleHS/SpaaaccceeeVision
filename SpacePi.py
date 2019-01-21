@@ -97,7 +97,7 @@ while True:
 		except:
 			pass
 	if table.getNumber("Draw Contours", 0) == 1:
-		cv2.drawContours(img, contours, -1, (0, 0, 0), 3)
+		cv2.drawContours(img, contours, -1, (255, 0, 0), 1)
 		cv2.drawContours(img, positive_targets, -1, (0, 255, 0), 5)
 		cv2.drawContours(img, negative_targets, -1, (0, 0, 255), 5)
 

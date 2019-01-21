@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import threading
 from networktables import NetworkTables
+import subprocess
 
 cond = threading.Condition()
 notified = [False]
@@ -21,7 +22,6 @@ with cond:
     if not notified[0]:
         cond.wait()
 
-# Insert your processing code here
 print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
@@ -29,9 +29,9 @@ table = NetworkTables.getTable('SpaceVision')
 cs = CameraServer.getInstance()
 cs.enableLogging()
 
-# Capture from the first USB Camera on the system
 camera = cs.startAutomaticCapture()
 camera.setResolution(320, 240)
+subprocess.call(["./setup_camera.sh"])
 
 # Get a CvSink. This will capture images from the camera
 cvSink = cs.getVideo()

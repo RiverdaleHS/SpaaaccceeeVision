@@ -87,8 +87,8 @@ while True:
 		
 		#solidity = float(area)/hull_area
 		#angle
-		# if len(contour) <= 5:
-		# 	break
+		if len(contour) <= 5:
+			break
 		try:
 			(x,y),(MA,ma),angle = cv2.fitEllipse(contour)
 			if angle < 30:

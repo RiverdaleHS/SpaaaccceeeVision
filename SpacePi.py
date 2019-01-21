@@ -25,12 +25,12 @@ with cond:
 print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
-table.putNumber("hue_min", 53)
-table.putNumber("hue_max", 68)#180
-table.putNumber("sat_min", 0)
-table.putNumber("sat_max", 250)#255
-table.putNumber("val_min", 0)
-table.putNumber("val_max", 80)#255
+table.putNumber("hue_min", 55)
+table.putNumber("hue_max", 70)#180
+table.putNumber("sat_min", 100)
+table.putNumber("sat_max", 240)#255
+table.putNumber("val_min", 50)
+table.putNumber("val_max", 100)#255
 
 cs = CameraServer.getInstance()
 cs.enableLogging()
@@ -102,7 +102,7 @@ while True:
 		cv2.drawContours(img, negative_targets, -1, (0, 0, 255), 5)
 
 
-	outputStream.putFrame(frame_binary)
+	outputStream.putFrame(img)
 
 
 

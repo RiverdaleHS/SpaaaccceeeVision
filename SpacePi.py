@@ -102,7 +102,7 @@ while True:
 	cv2.drawContours(img, negative_targets, -1, (0, 0, 255), 5)
 
 
-	outputStream.putFrame(img)
+	outputStream.putFrame(frame_binary)
 
 
 

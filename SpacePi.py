@@ -62,7 +62,7 @@ while True:
 	#img processing
 	frame_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	frame_binary = cv2.inRange(frame_hsv, (hue_min, sat_min, val_min), (hue_max, sat_max, val_max))
-	contours, hierarchy = cv2.findContours(frame_binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+	_, contours, _ = cv2.findContours(frame_binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
 	positive_targets = []
 	negative_targets = []

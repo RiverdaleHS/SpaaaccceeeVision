@@ -32,6 +32,11 @@ table.putNumber("sat_max", 150)#255
 table.putNumber("val_min", 85)
 table.putNumber("val_max", 220)#255
 
+table.putNumber("min Target Area", 50)
+table.putNumber("min aspect_ratio", 0)
+table.putNumber("max Target Area", 50)
+table.putNumber("max aspect_ratio", 0)
+
 cs = CameraServer.getInstance()
 cs.enableLogging()
 
@@ -79,12 +84,17 @@ while True:
 		x,y,w,h = cv2.boundingRect(contour)
 		aspect_ratio = float(w)/h
 
-		if area < table.getNumber("Max Target Area", 50):
+		if area < table.getNumber("min Target Area", 50):
 			break
 
-		if aspect_ratio < table.getNumber("Max aspect_ratio", 0):
+		if aspect_ratio < table.getNumber("min aspect_ratio", 0):
 			break
 		
+		if area > table.getNumber("max Target Area", 50):
+			break
+
+		if aspect_ratio > table.getNumber("max aspect_ratio", 0):
+			break
 		#solidity = float(area)/hull_area
 		#angle
 		if len(contour) <= 5:

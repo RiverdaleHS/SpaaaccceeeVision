@@ -53,12 +53,12 @@ while True:
 		outputStream.notifyError(cvSink.getError());
 		continue
 
-	hue_min = table.getNumber("hue_min", hue_min)
-	hue_max = table.getNumber("hue_max", hue_max)
-	sat_min = table.getNumber("sat_min", sat_min)
-	sat_max = table.getNumber("sat_max", sat_max)
-	val_min = table.getNumber("val_min", val_min)
-	val_max = table.getNumber("val_max", val_max)
+	hue_min = table.getNumber("hue_min", 0)
+	hue_max = table.getNumber("hue_max", 180)
+	sat_min = table.getNumber("sat_min", 0)
+	sat_max = table.getNumber("sat_max", 255)
+	val_min = table.getNumber("val_min", 0)
+	val_max = table.getNumber("val_max", 255)
 	#img processing
 	frame_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	frame_binary = cv2.inRange(frame_hsv, (hue_min, sat_min, val_min), (hue_max, sat_max, val_max))

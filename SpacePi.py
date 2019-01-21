@@ -43,6 +43,7 @@ subprocess.call(["./setup_camera.sh"])
 cvSink = cs.getVideo()
 
 # (optional) Setup a CvSource. This will send images back to the Dashboard
+imageStream = cs.putVideo("Image Stream", 320, 240)
 binaryStream = cs.putVideo("Binary Stream", 320, 240)
 contourStream = cs.putVideo("Contour Stream", 320, 240)
 
@@ -51,6 +52,7 @@ img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 while True:
 	time, img = cvSink.grabFrame(img)
 	if time == 0:
+		imageStream.notifyError(cvSink.getError());
 		binaryStream.notifyError(cvSink.getError());
 		contourStream.notifyError(cvSink.getError());
 		continue
@@ -103,6 +105,7 @@ while True:
 	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 5)
 	cv2.drawContours(frame_contour, negative_targets, -1, (0, 0, 255), 5)
 	
+	imageStream.putFrame(img)
 	binaryStream.putFrame(frame_binary)
 	contourStream.putFrame(frame_contour)
 

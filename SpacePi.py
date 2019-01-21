@@ -26,11 +26,11 @@ print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
 table.putNumber("hue_min", 55)
-table.putNumber("hue_max", 70)#180
-table.putNumber("sat_min", 100)
-table.putNumber("sat_max", 240)#255
-table.putNumber("val_min", 50)
-table.putNumber("val_max", 100)#255
+table.putNumber("hue_max", 72)#180
+table.putNumber("sat_min", 80)
+table.putNumber("sat_max", 150)#255
+table.putNumber("val_min", 85)
+table.putNumber("val_max", 220)#255
 
 cs = CameraServer.getInstance()
 cs.enableLogging()

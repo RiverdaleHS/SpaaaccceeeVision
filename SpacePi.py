@@ -97,16 +97,20 @@ while True:
 			break
 		#solidity = float(area)/hull_area
 		#angle
-		if len(contour) <= 5:
-			break
-		try:
-			(x,y),(MA,ma),angle = cv2.fitEllipse(contour)
-			if angle < 30:
-				positive_targets.append(contour)
-			if angle > 150:
-				negative_targets.append(contour)
-		except:
-			pass
+		# if len(contour) <= 5:
+		# 	break
+		# try:
+		# 	(x,y),(MA,ma),angle = cv2.fitEllipse(contour)
+		# 	if angle < 30:
+		# 		positive_targets.append(contour)
+		# 	if angle > 150:
+		# 		negative_targets.append(contour)
+
+
+		# except:
+		# 	pass
+		positive_targets.append(contour)
+
 	frame_contour = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 	cv2.drawContours(frame_contour, contours, -1, (255, 0, 0), 1)
 	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 1)

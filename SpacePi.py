@@ -25,12 +25,12 @@ with cond:
 print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
-table.putNumber("hue_min", 0)
-table.putNumber("hue_max", 180)#180
+table.putNumber("hue_min", 53)
+table.putNumber("hue_max", 68)#180
 table.putNumber("sat_min", 0)
-table.putNumber("sat_max", 255)#255
+table.putNumber("sat_max", 250)#255
 table.putNumber("val_min", 0)
-table.putNumber("val_max", 255)#255
+table.putNumber("val_max", 80)#255
 
 cs = CameraServer.getInstance()
 cs.enableLogging()
@@ -62,10 +62,47 @@ while True:
 	#img processing
 	frame_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 	frame_binary = cv2.inRange(frame_hsv, (hue_min, sat_min, val_min), (hue_max, sat_max, val_max))
+	contours, hierarchy = cv2.findContours(frame_binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+
+	positive_targets = []
+	negative_targets = []
+	vision_things = []
+
+	for contour in contours:
+		#solidity
+		area = cv2.contourArea(contour)
+		hull = cv2.convexHull(contour)
+		hull_area = cv2.contourArea(hull)
+		# if area == 0:
+		# 	break
+		x,y,w,h = cv2.boundingRect(contour)
+		aspect_ratio = float(w)/h
+		# if aspect_ratio > 0.5:
+		# 	pass
+		if area < 50:
+			pass
+		
+
+		vision_things.append(contour)
+		#solidity = float(area)/hull_area
+		#angle
+		# if len(contour) <= 5:
+		# 	break
+		try:
+			(x,y),(MA,ma),angle = cv2.fitEllipse(contour)
+			if angle < 30:
+				positive_targets.append(contour)
+			if angle > 150:
+				negative_targets.append(contour)
+		except:
+			pass
+
+	cv2.drawContours(img, contours, -1, (0, 0, 0), 3)
+	cv2.drawContours(img, positive_targets, -1, (0, 255, 0), 5)
+	cv2.drawContours(img, negative_targets, -1, (0, 0, 255), 5)
 
 
-
-	outputStream.putFrame(frame_binary)
+	outputStream.putFrame(img)
 
 
 

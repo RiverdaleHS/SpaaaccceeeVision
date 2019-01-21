@@ -25,12 +25,12 @@ with cond:
 print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
-table.putNumber("hue_min", 55)
-table.putNumber("hue_max", 72)#180
-table.putNumber("sat_min", 80)
-table.putNumber("sat_max", 150)#255
-table.putNumber("val_min", 85)
-table.putNumber("val_max", 220)#255
+table.putNumber("hue_min", 50)
+table.putNumber("hue_max", 70)#180
+table.putNumber("sat_min", 100)
+table.putNumber("sat_max", 250)#255
+table.putNumber("val_min", 20)
+table.putNumber("val_max", 50)#255
 
 table.putNumber("min Target Area", 50)
 table.putNumber("min aspect_ratio", 0)
@@ -116,7 +116,7 @@ while True:
 	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 1)
 	cv2.drawContours(frame_contour, negative_targets, -1, (0, 0, 255), 1)
 	
-	imageStream.putFrame(frame_hsv)
+	imageStream.putFrame(img)
 	binaryStream.putFrame(frame_binary)
 	contourStream.putFrame(frame_contour)
 

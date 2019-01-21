@@ -51,9 +51,9 @@ while True:
     time, img = cvSink.grabFrame(img)
     if time == 0:
         outputStream.notifyError(cvSink.getError());
-        continue
-        
- 	hue_min = table.getNumber("hue_min", hue_min)
+		continue
+
+	hue_min = table.getNumber("hue_min", hue_min)
 	hue_max = table.getNumber("hue_max", hue_max)
 	sat_min = table.getNumber("sat_min", sat_min)
 	sat_max = table.getNumber("sat_max", sat_max)

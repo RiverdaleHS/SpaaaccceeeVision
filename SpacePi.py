@@ -25,6 +25,12 @@ with cond:
 print("Connected!")
 
 table = NetworkTables.getTable('SpaceVision')
+table.putNumber("hue_min", hue_min)
+table.putNumber("hue_max", hue_max)
+table.putNumber("sat_min", sat_min)
+table.putNumber("sat_max", sat_max)
+table.putNumber("val_min", val_min)
+table.putNumber("val_max", val_max)
 
 cs = CameraServer.getInstance()
 cs.enableLogging()
@@ -39,22 +45,52 @@ cvSink = cs.getVideo()
 # (optional) Setup a CvSource. This will send images back to the Dashboard
 outputStream = cs.putVideo("Name", 320, 240)
 
-# Allocating new images is very expensive, always try to preallocate
 img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 
 while True:
-    # Tell the CvSink to grab a frame from the camera and put it
-    # in the source image.  If there is an error notify the output.
     time, img = cvSink.grabFrame(img)
     if time == 0:
-        # Send the output the error.
         outputStream.notifyError(cvSink.getError());
-        # skip the rest of the current iteration
         continue
 
-    #
-    # Insert your image processing logic here!
-    #
+ 	hue_min = table.getNumber("hue_min", hue_min)
+	hue_max = table.getNumber("hue_max", hue_max)
+	sat_min = table.getNumber("sat_min", sat_min)
+	sat_max = table.getNumber("sat_max", sat_max)
+	val_min = table.getNumber("val_min", val_min)
+	val_max = table.getNumber("val_max", val_max)
+ 	#img processing
+ 	frame_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+ 	frame_binary = cv2.inRange(frame_hsv, (hue_min, sat_min, val_min), (hue_max, sat_max, val_max))
 
-    # (optional) send some image back to the dashboard
-    outputStream.putFrame(img)
+
+
+    outputStream.putFrame(frame_binary)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

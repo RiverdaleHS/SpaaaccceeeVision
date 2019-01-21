@@ -23,3 +23,5 @@ with cond:
 print("Connected!")
 table = NetworkTables.getTable('SpaceVision')
 table.putNumber('ThisFingSucks', 1)
+while True:
+	pass

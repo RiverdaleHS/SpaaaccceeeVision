@@ -70,28 +70,25 @@ while True:
 
 	positive_targets = []
 	negative_targets = []
-	vision_things = []
 
 	for contour in contours:
 		#solidity
 		area = cv2.contourArea(contour)
 		hull = cv2.convexHull(contour)
 		hull_area = cv2.contourArea(hull)
-		# if area == 0:
-		# 	break
 		x,y,w,h = cv2.boundingRect(contour)
 		aspect_ratio = float(w)/h
-		# if aspect_ratio > 0.5:
-		# 	pass
-		if area < 50:
+
+		if area < table.getNumber("Max Target Area", 50):
+			pass
+
+		if aspect_ratio < table.getNumber("Max aspect_ratio", 0):
 			pass
 		
-
-		vision_things.append(contour)
 		#solidity = float(area)/hull_area
 		#angle
-		if len(contour) <= 5:
-			break
+		# if len(contour) <= 5:
+		# 	break
 		try:
 			(x,y),(MA,ma),angle = cv2.fitEllipse(contour)
 			if angle < 30:
@@ -102,8 +99,8 @@ while True:
 			pass
 	frame_contour = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 	cv2.drawContours(frame_contour, contours, -1, (255, 0, 0), 1)
-	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 5)
-	cv2.drawContours(frame_contour, negative_targets, -1, (0, 0, 255), 5)
+	cv2.drawContours(frame_contour, positive_targets, -1, (0, 255, 0), 1)
+	cv2.drawContours(frame_contour, negative_targets, -1, (0, 0, 255), 1)
 	
 	imageStream.putFrame(img)
 	binaryStream.putFrame(frame_binary)

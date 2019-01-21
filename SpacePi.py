@@ -80,10 +80,10 @@ while True:
 		aspect_ratio = float(w)/h
 
 		if area < table.getNumber("Max Target Area", 50):
-			pass
+			break
 
 		if aspect_ratio < table.getNumber("Max aspect_ratio", 0):
-			pass
+			break
 		
 		#solidity = float(area)/hull_area
 		#angle
